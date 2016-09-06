@@ -25,6 +25,8 @@ page="$originalpage"
 page=${page#*<tr>}  #Remove the first stuff
 echo "Departures from $station:"
 
+declare i; i=0
+
 while [ ${#page} -gt "300" ]; do
     selection="$page"  #Select the beginning
     selection=${selection%% </tr>*} #narrow selection
@@ -58,5 +60,8 @@ while [ ${#page} -gt "300" ]; do
     elif [ "$selectedPlatform" == "$platform" ]; then
 	print
     fi
-done
+    ((i++))
+    [ "$station" == "Forskningsparken" ] && [ "$i" == "6" ] && break #The assignment does not say that we _only_ can print one departure from each of the six subways,
+done                                                                 #but I'm doing it here just to be sure.
+                                                                     #For the other stations it's unspecified.
 
