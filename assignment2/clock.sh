@@ -1,7 +1,7 @@
 #!/bin/bash
 #A simple clock that prints the current time every second.
 #If "-AMPM" flag is supplied, the format will be am/pm.
-storedCommand="date +%R"
+storedCommand="date +%H:%M:%S"
 declare -i seconds; seconds=$(date +%s);
 
 while [ 1 ]; do
@@ -10,9 +10,9 @@ while [ 1 ]; do
 	((seconds=newtime))
 	if [ "$1" == "--AMPM" ]; then
 	    if [ $(date +%k) -gt "12" ]; then
-		storedCommand="date +\"%I:%M PM\"" #Kunne brukt %p, men det
+		storedCommand="date +\"%I:%M:%S PM\"" #Kunne brukt %p, men det
 	    else                                   #funker vel ikke med locale
-		storedCommand="date +\"%I:%M AM\""
+		storedCommand="date +\"%I:%M:%S AM\""
 	    fi
 	fi
 	clear
