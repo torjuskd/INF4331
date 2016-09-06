@@ -10,8 +10,8 @@ while [ 1 ]; do
 	((seconds=newtime))
 	if [ "$1" == "--AMPM" ]; then
 	    if [ $(date +%k) -gt "12" ]; then
-		storedCommand="date +\"%I:%M PM\""
-	    else
+		storedCommand="date +\"%I:%M PM\"" #Kunne brukt %p, men det
+	    else                                   #funker vel ikke med locale
 		storedCommand="date +\"%I:%M AM\""
 	    fi
 	fi
