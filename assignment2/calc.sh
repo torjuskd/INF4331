@@ -1,4 +1,8 @@
 #!/bin/bash
+#A simple calculator that takes a command, an input and returns an answer
+#Form: ./calc.sh [argument] num1 num2 num3 ...
+#flags: {-S (Sum), P (Product), M (Max), m (Min)}
+
 option=$1; shift;
 declare -i result
 
