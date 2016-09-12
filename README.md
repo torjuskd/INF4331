@@ -9,4 +9,4 @@
   * rpn.py (RPN-calculator)
   * wc.py (word count-like script)
   * my_unit_testing.py (simple unit testing)
-    - module of the unit testing file.
+    - a module of the unit testing file.
