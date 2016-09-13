@@ -51,10 +51,10 @@ def calc(userinput):
         stack.append(num)
 
 del sys.argv[0] #remove first arg (not really needed, could use arg[1] instead)
-for arg in sys.argv[0].split(" "): #feed arguments into calc
+for arg in sys.argv[0].split(): #feed arguments into calc
     calc(arg)
 
 while True: #keep taking inputs from keyboard
     userinputList = input('> ')
-    for userinput in userinputList.strip().split(" "):
+    for userinput in userinputList.strip().split():
         calc(userinput)
