@@ -1,2 +1,19 @@
 # Write a (very) brief report of
 # what test is failing, and explain what is wrong with better addition.
+
+When better addition is executed the first time,it has parameters ([4, 7], 0).
+Then it loops over these 0 times (because num_rechecks is zero),
+and stores the result into sum_computations on line #6:
+    sum_computations = [a + b for n in range(num_rechecks)]
+
+Then it loops zero times again on line 8:
+     for n in range(num_rechecks):
+
+And then attempts to return an answer:
+    return sum_computations[0]  # if all computations match, return whichever
+
+But sum_computations[0] isn't declared and we get an exception.
+The exception is of type 'IndexError', because there is nothing at the requested index.
+
+(That is not the only thing that is problematic about this program, but please don't
+get me started on the other things...)
