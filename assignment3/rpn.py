@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # A simple calculator using a stack and reverse polish notation.
-# ex: ./rpn.py 1 1 +
+# ex: ./rpn.py "1 1 +"
 # > 2
 from math import sin
 from math import cos
@@ -18,21 +18,21 @@ def calc(userinput):
         del stack[-1]
         result=eval("sqrt("+num1+")")
         print(result)
-        stack.append(result)
+        stack.append(str(result))
 
     elif userinput == "sin": #find sin
         num1=stack[-1]
         del stack[-1]
         result=eval("sin("+num1+")")
         print(result)
-        stack.append(result)
+        stack.append(str(result))
 
     elif userinput == "cos": #find cos
         num1=stack[-1]
         del stack[-1]
         result=eval("cos("+num1+")")
         print(result)
-        stack.append(result)
+        stack.append(str(result))
 
     elif userinput in ("+", "-", "*", "/"):
         num2 = stack[-1]
@@ -50,8 +50,8 @@ def calc(userinput):
         num = userinput
         stack.append(num)
 
-del sys.argv[0] #remove first arg (command used to execute script)
-for arg in sys.argv: #feed arguments into calc
+del sys.argv[0] #remove first arg (not really needed, could use arg[1] instead)
+for arg in sys.argv[0].split(" "): #feed arguments into calc
     calc(arg)
 
 while True: #keep taking inputs from keyboard
