@@ -17,8 +17,7 @@ num_tests = 0
 num_passed = 0
 for a, b, n, r in [(4, 7, 0, 11),
                    (4, 7, 4, 11),
-                   (2, 2, 2, 4),
-                   (2, 2, 5, 6)]:
+                   (2, 2, 2, 4)]:
     test = UnitTest(better_addition,     # UnitTest() calls the __init__ method
                     [a, b], {"num_rechecks": n}, r)
     num_tests+= 1
