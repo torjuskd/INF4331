@@ -1,102 +1,49 @@
 #!/usr/bin/env python3
+# Calculate and writes an image of the Mandelbrot set.
 
-# from numpy import *
-# from matplotlib import pyplot
-
-
-from matplotlib import pyplot
-from numpy import linspace, cos, exp, pi, random, arctan2, array, empty
-#import seaborn       
-
-countLimit = 100
-count = 0
-x0 = 0
-c = -1
-z = 0
+from matplotlib import pyplot as plt
+from numpy import arange, zeros, NaN
+import seaborn
 
 
+def mandelbrot(c, stepLimit):
+    #return NAN if in set, else how many steps it took to prove it's not in the  set.
+    z=0
+    for steps in range(stepLimit):
+        if abs(z) > 2:
+            return steps
+        z = z**2  + c
+    return NaN
 
-def mandelbrot(c, z, steps):
-    #find out if mandelbrot - black
-    #return -1 if yes, else how many steps (color according to amount of steps)
-    if abs(z) > 2:
-        return steps
-    if steps < countLimit:
-        z = z * z + c
-        mandelbrot(c, z, steps + 1)
-    else:
-#        return -1
-        return 0
-
-def mandelbrot_calc():
-    start = -1
-    end = 1
-    rectangleheight = 1000
-#    rectanglewidth = int(rectangleheight * 1.68033989)
-    rectanglewidth = 1000
-    xaxis = linspace(start, end, rectanglewidth)
-    yaxis = linspace(start, end, rectangleheight)
-    values = empty((rectanglewidth, rectangleheight))
-    for i in range(rectanglewidth):
-        for j in range(rectangleheight):
-            values[i, j] = mandelbrot(xaxis[i] + 1j*yaxis[j], 0, 0)
+def mandelbrot_calc(stepLimit, startX, endX, startY, endY):
+    xaxis = arange(startX, endX, .002)
+    yaxis = arange(startY,  endY, .002)
+    values = zeros((len(yaxis), len(xaxis)))
+    for yindex in range(len(yaxis)):
+        for xindex in range(len(xaxis)):
+            values[yindex,xindex] = mandelbrot((xaxis[xindex] + 1j * yaxis[yindex]), stepLimit)
     return (xaxis, yaxis, values)
 
-result = mandelbrot_calc()
+def draw(X, Y, values):
+    # prism is nice for its reapeating colors, but we need to color pixels in the mandelbrot set black so we have to modify it.
+    modifiedPrism = plt.cm.prism
+    modifiedPrism.set_bad(color='#000000', alpha=None)
+    plt.imshow(values, cmap = modifiedPrism, interpolation = 'none', extent = (X.min(), X.max(), Y.min(), Y.max()))
+    plt.xlabel("Real(c)")
+    plt.ylabel("Imaginary(c)")
+    plt.savefig("mandelbrot_plot.svg")
+    #plt.show() #Don't show yet only save to file.
 
+# The values of these can be changed at your will.
+stepLimit = 100
+magicNum = 1.68033989
+xyOffset = -1
 
+startY = -1.5
+endY = 1.5
+startX = startY * magicNum + xyOffset
+endX = endY * magicNum + xyOffset
 
-test = int(abs(result[2]) > 2)
-
-n = 1024
-X = result[0]
-Y = result[1]
-T = test
-
-#pyplot.axes([0.025, 0.025, 0.95, 0.95])
-pyplot.scatter(X, Y, s=75, c=T, alpha=.5)
-
-
-pyplot.show()
-
-
-
-
-
-
-
-
-
-
-
-# n = 2000
-# x = linspace(-1.0, 1.0, n, endpoint=True) # coordinates    
-# rectangle = array([x, x])
-
-# figure = pyplot.figure()
-# ax = figure.add_subplot(1, 1, 1)
-
-# #x = rectangle[:,0]
-# y = rectangle[:,1]
-
-
-# #pyplot.axes([0.025, 0.025, 0.95, 0.95]) 
-# pyplot.scatter(x, x, s=75, alpha=.5)
-
-
-# pyplot.show()
-
-
-
-
-
-# n = 1024
-# X = random.normal(0, 1, n)
-# Y = random.normal(0, 1, n)
-# T = arctan2(Y, X)
-
-# pyplot.axes([0.025, 0.025, 0.95, 0.95])
-# pyplot.scatter(X, Y, s=75, c=T, alpha=.5)
-
-
-# pyplot.show()
+# Here we do the calculations and write the resulting image.
+result = mandelbrot_calc(stepLimit, startX, endX, startY, endY)
+draw(X=result[0], Y=result[1], values=result[2])
