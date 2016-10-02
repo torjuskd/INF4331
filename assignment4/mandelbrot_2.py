@@ -7,8 +7,7 @@ import seaborn
 
 
 def mandelbrot(c, stepLimit):
-    #return NAN if in set, else how many steps it took to prove it's not in the  set.
-    #c = asarray(c)
+    #reurns array with NAN for values in set, else how many steps it took to prove it's not in the  set.
     result = zeros((len(c), len(c[0])))
     computations = zeros((len(c), len(c[0])))
     for steps in range(stepLimit):
