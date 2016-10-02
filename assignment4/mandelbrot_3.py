@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # Calculate and writes an image of the Mandelbrot set.
 
-import apply 
-#from  apply import apply_mandelbrot
+import mandelbrot_3_cython
 from matplotlib import pyplot as plt
 from numpy import arange, zeros, NaN
 import seaborn
@@ -14,7 +13,7 @@ def mandelbrot_calc(stepLimit, startX, endX, startY, endY):
     values = zeros((len(yaxis), len(xaxis)))
     for yindex in range(len(yaxis)):
         for xindex in range(len(xaxis)):
-            values[yindex,xindex] = apply.apply_mandelbrot(xaxis[xindex], yaxis[yindex], stepLimit)
+            values[yindex,xindex] = mandelbrot_3_cython.mandelbrot(xaxis[xindex], yaxis[yindex], stepLimit)
     return (xaxis, yaxis, values)
 
 def draw(X, Y, values):

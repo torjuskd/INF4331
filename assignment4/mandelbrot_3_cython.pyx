@@ -5,7 +5,7 @@ cdef extern from "math.h":
 cdef extern from "math.h":
     double sqrt(double x)
 
-cpdef int apply_mandelbrot(double c_real, double c_imag, int stepLimit):
+cpdef int mandelbrot(double c_real, double c_imag, int stepLimit):
     cdef double z_real = 0.0
     cdef double z_imag = 0.0
     cdef double z_real_tmp = 0.0
