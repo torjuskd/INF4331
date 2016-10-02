@@ -1,0 +1,19 @@
+Report of runtime of mandelbrot_4.py
+mandelbrot_4: 1.783 sec
+
+
+We earlier had these runtimes:
+mandelbrot_1: 26.734 sec
+mandebrot_2: 155.088 sec
+mandelbrot_3: 1.601 sec
+
+So we seem to get about the same runtime out of mandelbrot_4 and mandelbrot_3.
+But after running these scripts a couple times, mandelbrot_3 seems just a little faster.
+
+
+Comments:
+---------
+It was certainly easier to write this algorithm using swig, because I already have some experience writing C code.
+It feels much more familiar when you can use C syntax when writing C code, and not some mix of python and C.
+However, It might be easier to change the other that was written in cython, where you don't have to write headers,
+use swig etc. With cython you also make less files, which means less caos.
