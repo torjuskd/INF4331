@@ -1,0 +1,7 @@
+Report of runtimes of mandelbrot_1.py and mandelbrot_2.py.
+mandelbrot_1: 26.734 sec
+mandebrot_2: 155.088 sec
+
+With the array calculations and added loops for mandelbrot_2 we get a significant performance loss 
+(it now takes about 5 times as long).
+Maybe this could have been done faster, but it seems the assignment asks for numpy-array calculations.

@@ -1,0 +1,8 @@
+Report of runtime of mandelbrot_3.py
+mandelbrot_3: 1.601 sec
+
+This is significantly better than for the scripts mandelbrot_1 and mandelbrot_2:
+mandelbrot_1: 26.734 sec
+mandebrot_2: 155.088 sec
+
+The runtime of mandelbrot_3 is only about 6% of that of mandelbrot_1!

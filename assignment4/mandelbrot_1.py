@@ -4,6 +4,7 @@
 from matplotlib import pyplot as plt
 from numpy import arange, zeros, NaN
 import seaborn
+import time
 
 
 def mandelbrot(c, stepLimit):
@@ -44,6 +45,10 @@ endY = 1.5
 startX = startY * magicNum + xyOffset
 endX = endY * magicNum + xyOffset
 
+t1 = time.clock()
 # Here we do the calculations and write the resulting image.
 result = mandelbrot_calc(stepLimit, startX, endX, startY, endY)
+t2 = time.clock()
+print('{:.3f} sec'.format(t2-t1))
 draw(X=result[0], Y=result[1], values=result[2])
+
