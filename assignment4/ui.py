@@ -10,7 +10,7 @@ import sys
 import mandelbrot_1 as m1
 import mandelbrot_2 as m2
 import mandelbrot_3 as m3
-import mandelbrot_4_starter as m4
+import mandelbrot_4 as m4
 
 def draw(X, Y, values, filename):
     # prism is nice for its reapeating colors, but we need to color pixels in the mandelbrot set black so we have to modify it.
@@ -48,7 +48,7 @@ startX = startY * magicNum + xyOffset
 endX = endY * magicNum + xyOffset
 
 #new parameters
-implementation = 4
+implementation = 3
 resolution = .002
 filename = "mandelbrot_plot.svg"
 
@@ -61,7 +61,8 @@ if len(arguments) > 0 and arguments[0] == "--help": # print help
 
 while len(arguments) > 0:
     arg1 = arguments[0].strip()
-    arg2 = arguments[1].strip()
+    if(len(arguments) > 1): 
+        arg2 = arguments[1].strip()
     
     if arg1 == "-xstart":
         startX = float(arg2)
@@ -96,7 +97,6 @@ while len(arguments) > 0:
 
 t1 = time.clock()
 # Here we do the calculations and write the resulting image.
-result = None
 if implementation == 1:
     result = m1.mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution)
 elif implementation == 2:
@@ -109,6 +109,6 @@ else:
     result = m3.mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution)
 
 t2 = time.clock()
-print('{:.3f} sec'.format(t2-t1))
+print('mandelbrot_'+str(implementation)+ ' took '+'{:.3f} sec'.format(t2-t1))
 draw(X=result[0], Y=result[1], values=result[2], filename=filename)
 
