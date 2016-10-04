@@ -2,44 +2,43 @@
 # Calculate and writes an image of the Mandelbrot set.
 
 from matplotlib import pyplot as plt
-from numpy import arange, zeros, NaN
-import seaborn
+#from numpy import arange, zeros, NaN
+#import seaborn
 import time
-from mandelbrot_1 import mandelbrot_calc, draw
-from mandelbrot_2 import mandelbrot_calc, draw
-from mandelbrot_3 import mandelbrot_calc, draw
-from mandelbrot_4_starter import mandelbrot_calc, draw
+import sys
 
-def mandelbrot(c, stepLimit):
-    #return NAN if in set, else how many steps it took to prove it's not in the  set.
-    z=0
-    for steps in range(stepLimit):
-        if abs(z) > 2:
-            return steps
-        z = z**2  + c
-    return NaN
+import mandelbrot_1 as m1
+import mandelbrot_2 as m2
+import mandelbrot_3 as m3
+import mandelbrot_4_starter as m4
 
-def mandelbrot_calc(stepLimit, startX, endX, startY, endY):
-    xaxis = arange(startX, endX, .002)
-    yaxis = arange(startY,  endY, .002)
-    values = zeros((len(yaxis), len(xaxis)))
-    for yindex in range(len(yaxis)):
-        for xindex in range(len(xaxis)):
-            values[yindex,xindex] = mandelbrot((xaxis[xindex] + 1j * yaxis[yindex]), stepLimit)
-    return (xaxis, yaxis, values)
-
-def draw(X, Y, values):
+def draw(X, Y, values, filename):
     # prism is nice for its reapeating colors, but we need to color pixels in the mandelbrot set black so we have to modify it.
-    modifiedPrism = plt.cm.prism
-    modifiedPrism.set_bad(color='#000000', alpha=None)
-    plt.imshow(values, cmap = modifiedPrism, interpolation = 'none', extent = (X.min(), X.max(), Y.min(), Y.max()))
+    modifiedcm = plt.cm.prism
+    modifiedcm.set_bad(color='#000000', alpha=None)
+    modifiedcm.set_under(color='#000000', alpha=None)
+    plt.imshow(values, cmap = modifiedcm, vmin=.001, interpolation = 'none', extent = (X.min(), X.max(), Y.min(), Y.max()))
     plt.xlabel("Real(c)")
     plt.ylabel("Imaginary(c)")
-    plt.savefig("mandelbrot_plot.svg")
+    plt.savefig(filename)
     #plt.show() #Don't show yet only save to file.
 
+def help():
+    usage_string = """usage: ./ui.py [filename] [option]
+    Default filename is "mandelbrot_plot.svg", options and arguments:
+    -xstart    : The lowest x-coordinate to start drawing from
+    -xend      : The highest x-coordinate that will be drawn
+    -ystart    : The lowest x-coordinate to start drawing from
+    -yend      : The highest x-coordinate that will be drawn
+    -r         : Resulotion to draw in, lower numbers give higer resolution (default: .002)
+    -i         : Implementation to use, a number from 1 to 4 (default: 3)
+    -steps     : Number of times to run number through mandelbrot function before concluding its in the set"""
+    print(usage_string)
+    sys.exit()
+
+
 # Default values.
-stepLimit = 100
+stepLimit = 1000
 magicNum = 1.68033989
 xyOffset = -1
 
@@ -48,20 +47,68 @@ endY = 1.5
 startX = startY * magicNum + xyOffset
 endX = endY * magicNum + xyOffset
 
-del sys.argv[0]
+#new parameters
+implementation = 4
+resolution = .002
+filename = "mandelbrot_plot.svg"
 
-#Specify region to draw, reslolution to draw in, output image filename.
 
-#print help
-if sys.argv[0] == "--help":
-    print "usage: ./ui.py"
+#Specify region to draw, reslolution to draw in, output image filename, specify implementation
+arguments = sys.argv[1:]
+
+if len(arguments) > 0 and arguments[0] == "--help": # print help
+    help()
+
+while len(arguments) > 0:
+    arg1 = arguments[0].strip()
+    arg2 = arguments[1].strip()
+    
+    if arg1 == "-xstart":
+        startX = float(arg2)
+
+    elif arg1 == "-xend":
+        endX = float(arg2)
+        
+    elif arg1 == "-ystart":
+        startY = float(arg2)
+        
+    elif arg1 == "-yend":
+        endY = float(arg2)
+
+    elif arg1 == "-r":
+        resolution = float(arg2)
+
+    elif arg1 == "-i":
+        implementation = int(arg2)
+        
+    elif arg1 == "-steps":
+        stepLimit = int(arg2)
+
+    else: #interpret as filename
+        filename = arg1
+        del arguments[0]
+        continue
+
+    del arguments[0]
+    del arguments[0]
 
 
 
 t1 = time.clock()
 # Here we do the calculations and write the resulting image.
-result = mandelbrot_calc(stepLimit, startX, endX, startY, endY)
+result = None
+if implementation == 1:
+    result = m1.mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution)
+elif implementation == 2:
+    result = m2.mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution)
+elif implementation == 3:
+    result = m3.mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution)
+elif implementation == 4:
+    result = m4.mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution)
+else:
+    result = m3.mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution)
+
 t2 = time.clock()
 print('{:.3f} sec'.format(t2-t1))
-draw(X=result[0], Y=result[1], values=result[2])
+draw(X=result[0], Y=result[1], values=result[2], filename=filename)
 
