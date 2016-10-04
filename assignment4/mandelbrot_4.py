@@ -8,7 +8,7 @@
 import mandelbrot_4_swig
 from matplotlib import pyplot as plt
 from numpy import arange, zeros, NaN
-import seaborn
+#import seaborn
 import time
 
 def mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution):

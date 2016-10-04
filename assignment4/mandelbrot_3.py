@@ -7,7 +7,7 @@
 import mandelbrot_3_cython
 from matplotlib import pyplot as plt
 from numpy import arange, zeros, NaN
-import seaborn
+#import seaborn
 import time
 
 def mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution):
@@ -17,6 +17,15 @@ def mandelbrot_calc(stepLimit, startX, endX, startY, endY, resolution):
     for yindex in range(len(yaxis)):
         for xindex in range(len(xaxis)):
             values[yindex,xindex] = mandelbrot_3_cython.mandelbrot(xaxis[xindex], yaxis[yindex], stepLimit)
+    return (xaxis, yaxis, values)
+
+def compute_mandelbrot(xmin, xmax, ymin, ymax, Nx, Ny, max_escape_time=1000):
+    xaxis = linspace(xmin, xmax, Nx)
+    yaxis = arange(ymin,  ymax, Ny)
+    values = zeros((len(yaxis), len(xaxis)))
+    for yindex in range(len(yaxis)):
+        for xindex in range(len(xaxis)):
+            values[yindex,xindex] = mandelbrot_3_cython.mandelbrot(xaxis[xindex], yaxis[yindex], max_escape_time)
     return (xaxis, yaxis, values)
 
 def draw(X, Y, values):
