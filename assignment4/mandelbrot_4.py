@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # Calculate and writes an image of the Mandelbrot set.
 
+# set up with:
+# swig -python mandelbrot_4_swig.i
+# python3 mandelbrot_4_setup.py build_ext --inplace
+
 import mandelbrot_4_swig
 from matplotlib import pyplot as plt
 from numpy import arange, zeros, NaN
