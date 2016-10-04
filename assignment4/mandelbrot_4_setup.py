@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # set up with:
-# swig -python mandelbrot_4.i
-# python3 setup_4.py build_ext --inplace
+# swig -python mandelbrot_4_swig.i
+# python3 mandelbrot_4_setup.py build_ext --inplace
 
 # Run with:
-# ./mandelbrot_4_starter.py
+# ./mandelbrot_4.py
 
 """
 setup4.py file for SWIG mandelbrot_4
@@ -13,8 +13,8 @@ setup4.py file for SWIG mandelbrot_4
 from distutils.core import setup, Extension
 
 
-example_module = Extension('_mandelbrot_4',
-                           sources=['mandelbrot_4_wrap.c', 'mandelbrot_4.c'],
+example_module = Extension('_mandelbrot_4_swig',
+                           sources=['mandelbrot_4_swig_wrap.c', 'mandelbrot_4_swig.c'],
                            )
 
 setup (name = 'example',

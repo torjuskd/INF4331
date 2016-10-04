@@ -1,4 +1,4 @@
-/* File: example.h */
+/* File: mandelbrot_4_swig.h */
 #include <math.h>
 double sqrt (double x );
 
