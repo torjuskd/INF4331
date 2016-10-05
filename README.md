@@ -10,3 +10,6 @@
   * wc.py (word count-like script)
   * my_unit_testing.py (simple unit testing)
     - a module of the unit testing file.
+- Assignment4: Mandlebrot set calculation and drawing
+  * 4 Mandelbrot scripts + mandelbrot.py (UI)
+  * replicator.py (self-replicating program, aka. quine)
