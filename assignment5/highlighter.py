@@ -53,4 +53,3 @@ if __name__ == "__main__":
     syntaxrules = readrulefile(sys.argv[1], syntax=True)
     themerules = readrulefile(sys.argv[2])
     highlight(syntaxrules, themerules, sourcefilename=sys.argv[3])
-
