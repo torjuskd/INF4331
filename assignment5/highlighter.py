@@ -24,7 +24,7 @@ def readrulefile(rulefilename, syntax=False):
     with open(rulefilename) as rulefile:
         for line in rulefile:
             if syntax:
-                rules.append([re.search(r"^\"(.*)\":", line).group(1), re.search(r": (.*)(?:$|\n)", line).group(1)])
+                rules.append([re.search(r"^\"(.*)\":", line).group(1), re.search(r": (.*)(?:$|\n)", line).group(1).strip()])
             else:
                 rules.append(line.strip().split(": "))
     return rules
@@ -57,4 +57,4 @@ if __name__ == "__main__":
     syntaxrules = readrulefile(sys.argv[1], syntax=True)
     themerules = readrulefile(sys.argv[2])
     highlight(syntaxrules, themerules, sourcefilename=sys.argv[3])
-    #print(syntaxrules)
+    # print(syntaxrules)
