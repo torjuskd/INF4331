@@ -1,0 +1,12 @@
+"\#.*(?:$|\n)": comment
+"(?:(\n|^)(\s)*)\bdef\b": function definition
+"(?:(\n|^|\r)?(\s)*?\bdef\b)\s*(.*)": function definition name
+"(None|True|False)": special
+"(?:(^|\n|\r)(\s*))\bclass\b.*(?:$|\n)": class definition
+"("""(.|\n)*?[^\\]"""|""(.|\n)*?[^\\]""|'(.|\n)*?[^\\]'|"(.|\n)*?[^\\]")": string
+"(?:(^|\n|\r)(\s*))\bimport\b": import
+"(?:(^|\n|\r)(\s*))\bfor\b": for
+"(?:(^|\n|\r)(\s*))\bwhile\b": while
+"(?:(^|\n|\r)(\s*))\bif\b": if/elif/else
+"(?:(^|\n|\r)(\s*))\belif\b": if/elif/else
+"(?:(^|\n|\r)(\s*))\belse\b": if/elif/else

@@ -7,6 +7,10 @@
 import sys
 import re
 
+#class something
+class asdf:
+    asdfasdf=0
+
 def readrulefile(rulefilename, syntax=False):
     """Reads rule-defining files in format <regex>: <rulename>
         
@@ -20,9 +24,9 @@ def readrulefile(rulefilename, syntax=False):
     with open(rulefilename) as rulefile:
         for line in rulefile:
             if syntax:
-                rules.append([re.search(r"^\"(.*)\":", line).group(1), re.search(r": (\w+)$", line).group(1)])
+                rules.append([re.search(r"^\"(.*)\":", line).group(1), re.search(r": (.*)(?:$|\n)", line).group(1)])
             else:
-                rules.append(line.split(": "))
+                rules.append(line.strip().split(": "))
     return rules
 
 def highlight(syntaxrules, themerules, sourcefilename):
@@ -42,7 +46,7 @@ def highlight(syntaxrules, themerules, sourcefilename):
         for syntaxrule in syntaxrules:
             for themerule in themerules:
                 if themerule[0] == syntaxrule[1]:
-                    data = re.sub("("+syntaxrule[0]+")", "\033[{}m".format(themerule[1]) + r"\1" + "\033[0m", data)
+                    data = re.sub("("+syntaxrule[0]+")", "\033[{}m".format(themerule[1]) + r"\1" + "\033[0m", data, flags=re.MULTILINE)
     print(data)
 
 # Nice to have:
@@ -53,3 +57,4 @@ if __name__ == "__main__":
     syntaxrules = readrulefile(sys.argv[1], syntax=True)
     themerules = readrulefile(sys.argv[2])
     highlight(syntaxrules, themerules, sourcefilename=sys.argv[3])
+    #print(syntaxrules)
