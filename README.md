@@ -13,3 +13,8 @@
 - Assignment4: Mandlebrot set calculation and drawing
   * 4 Mandelbrot scripts + mandelbrot.py (UI)
   * replicator.py (self-replicating program, aka. quine)
+- Assignment5: Regex
+  * highlighter.py (highlights a syntax, using input theme and syntax (regex) rules)
+    - limited support for some languages included.
+  * my_diff.py (alternative implementation of the diff utility)
+    - can be highlighted using diff.theme and diff.syntax.
