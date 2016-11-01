@@ -46,24 +46,39 @@ def diff(string1, string2):
     output=""
     arr1=string1.split("\n")
     arr2=string2.split("\n")
+    line2N=0
+    line1N=0
 
-    for lineN in range(len(arr1)):
-        line1=arr1[lineN]
-        line2=arr2[lineN]
-        if len(arr2) < lineN: #File1 longer than file2, assume line have been deleted
-            output=output +"-" + line1 + "\n"
+    while line1N < len(arr1) or line2N < len(arr2):
+        
+        if line2N >= len(arr2): #File1 longer than file2, assume line deleted
+            line1=arr1[line1N]
+            output=output + "-" + line1 + "\n"
+            line1N=line1N+1
             continue
+        elif line1N >= len(arr1): #File2 longer than file1, assume line added
+            line2=arr2[line2N]
+            output=output + "+" + line2 + "\n"
+            line2N=line2N+1
+            continue
+
+        line1=arr1[line1N]
+        line2=arr2[line2N]
             
-        if arr1[lineN] == arr2[lineN]: #Lines are equal
+        if arr1[line1N] == arr2[line2N]: #Lines are equal
             output=output +"0" + line1 + "\n"
         else: #Lines are different
-            output=output +"-" + line1 + "\n"
-            output=output +"+" + line2 + "\n"
-
-    if len(arr2) > len(arr1): #File2 longer than file 1, assume line has been added
-        for lineN in range(len(arr1), len(arr2)):
-            line2=arr2[lineN]
-            output=output +"+" + line2 + "\n"
+            if line1 in arr2: #assume that line appears later
+                output=output + "+" + line2 + "\n"
+                line1N=line1N-1
+            elif line1 not in arr2: #line is nowhere in file2, assume deleted
+                output=output + "-" + line1 + "\n"
+                line2N=line2N-1
+            else: #default behaviour
+                output=output + "-" + line1 + "\n"
+                output=output + "+" + line2 + "\n"
+        line2N=line2N+1
+        line1N=line1N+1
 
     return output
 
@@ -79,4 +94,4 @@ if __name__ == "__main__":
         writefile(output, sys.argv[3])
     else: #No filename given: print to standard out
         writefile(output)
-    print(output)
+        print(output)
