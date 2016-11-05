@@ -59,7 +59,7 @@ def highlight(syntaxrules, themerules, sourcefilename):
 if __name__ == "__main__":
     if len(sys.argv) < 4: # Print help
         print("Usage: python3 highlighter.py <syntaxfile> <themefile> <sourcefile_to_color>")
-        sys.exit()
+        sys.exit("Wrong commandline arguments supplied.")
     syntaxrules = readrulefile(sys.argv[1], syntax=True)
     themerules = readrulefile(sys.argv[2])
     data=highlight(syntaxrules, themerules, sourcefilename=sys.argv[3])

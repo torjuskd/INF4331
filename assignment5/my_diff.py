@@ -92,6 +92,5 @@ if __name__ == "__main__":
     output=diff(string1, string2)
     if len(sys.argv) > 3: #filename has been supplied
         writefile(output, sys.argv[3])
-    else: #No filename given: print to standard out
+    else: #No filename given: write to standard filename
         writefile(output)
-        print(output)
