@@ -40,14 +40,20 @@ def highlight(syntaxrules, themerules, sourcefilename):
         Returns:
             <none>
         """
+    #select: 1: colortag1, 2: selection up to 2. colortag, 3: 2. colortag, 4: selec. up to colortag 2. end, 5: colortag 2. end
+    regex="(\\033\[\d+;\d+m)((?:(?!\\033\[0m).)*)(\\033\[\d+;\d+m)(.*?)(\\033\[0m)"
+
     with open(sourcefilename) as sourcefile:
         read_data = sourcefile.read()
         data = read_data
+        lines=data.split("\n");
         for syntaxrule in syntaxrules:
             for themerule in themerules:
                 if themerule[0] == syntaxrule[1]:
-                    data = re.sub("("+syntaxrule[0]+")", "\033[{}m".format(themerule[1]) + r"\1" + "\033[0m", data, flags=re.MULTILINE)
-    print(data)
+                    data = re.sub("("+syntaxrule[0]+")", ("\033[{}m".format(themerule[1]) + r"\1" + "\033[0m"), data, flags=re.MULTILINE)
+                    data = re.sub(regex, (r"\1\2" + "\033[0m" + r"\3\4\5\1"), data, flags=re.MULTILINE) #fix colors inside each other
+                    break #we found corresponding theme and syntax, jump to next syntax rule
+        return data
 
 # Nice to have:
 if __name__ == "__main__":
@@ -56,5 +62,6 @@ if __name__ == "__main__":
         sys.exit()
     syntaxrules = readrulefile(sys.argv[1], syntax=True)
     themerules = readrulefile(sys.argv[2])
-    highlight(syntaxrules, themerules, sourcefilename=sys.argv[3])
+    data=highlight(syntaxrules, themerules, sourcefilename=sys.argv[3])
+    print(data)
     # print(syntaxrules)

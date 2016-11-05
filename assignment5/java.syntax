@@ -6,9 +6,11 @@
 "("""(.|\n)*?[^\\]"""|""(.|\n)*?[^\\]""|'(.|\n)*?[^\\]'|"(.|\n)*?[^\\]")": string
 "(?:(^|\n|\r)(\s*))\bimport\b": import
 "(?:(^|\n|\r)(\s*))\bfor\b": for
-"(?:(^|\n|\r)(\s*))\bwhile\s*\(\.*\)": while
 "(?:(^|\n|\r)(\s*))\bif\b": if/elif/else
 "(?:(^|\n|\r)(\s*))\belif\b": if/elif/else
 "(?:(^|\n|\r)(\s*))\belse\b": if/elif/else
-"(^|\n|\r)\s*\w+\s*=": assignment
+"(^|\n|\r)\s*(\w|\.|\s)+?\s*=": assignment
 "(?:(^|\n|\r)(\s*))\breturn\b": if/elif/else
+"(?:(^|\n|\r)(\s*))\bwhile(\s)*(.*?)": while
+"\b\w+\(.*\)[^(\s*\{)]": method_invocation
+"(?:(^|\n|\r)(\s*))\b(public|protected|private)?(\s)+(static)?(\s)*(final)?(\s)*\b(byte|short|int|long|float|double|char|boolean|String|\w+)\b": variables_and_methods

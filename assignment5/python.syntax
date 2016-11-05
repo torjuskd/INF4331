@@ -10,4 +10,4 @@
 "(?:(^|\n|\r)(\s*))\bif\b": if/elif/else
 "(?:(^|\n|\r)(\s*))\belif\b": if/elif/else
 "(?:(^|\n|\r)(\s*))\belse\b": if/elif/else
-"(^|\n|\r)\s*\w+\s*=": assignment
+"(^|\n|\r)\s*(\w|\.)+?\s*=": assignment
