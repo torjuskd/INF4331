@@ -5,8 +5,14 @@
 
 from distutils.core import setup
 from Cython.Build import cythonize
+from distutils.extension import Extension
+
+
+extensions = [
+    Extension("mandelbrot_3_cython", ["mandelbrot_3_files/mandelbrot_3_cython.pyx"])
+    ]
 
 setup(
-    name = "mandelbrot_3_cython",
-    ext_modules = cythonize("*.pyx"),
+    ext_modules = cythonize(extensions)
 )
+

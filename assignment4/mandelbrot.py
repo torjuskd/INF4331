@@ -7,11 +7,11 @@ from matplotlib import pyplot as plt
 #import seaborn
 import time
 import sys
-
 import mandelbrot_1 as m1
 import mandelbrot_2 as m2
-import mandelbrot_3 as m3
 import mandelbrot_4 as m4
+import mandelbrot_3 as m3
+
 
 def draw(X, Y, values, filename=None, colormap="prism", showlabels="True"):
     modifiedcm=plt.get_cmap(colormap)
