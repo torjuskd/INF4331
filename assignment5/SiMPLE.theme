@@ -1,0 +1,23 @@
+And: 0;39
+Break: 0;30
+Call: 0;31
+Common: 0;31
+Continue: 0;32
+Display: 0;33
+Do: 0;34
+Else: 0;35
+End: 0;36
+Float (or Decimal): 0;37
+Float2 (or Decimal2): 0;90
+Goto: 0;91
+If: 0;92
+Int (or Whole): 0;93           
+Int2 (or Whole2): 0;94
+Loop: 0;95
+Or: 0;96
+Return: 0;97
+Set: 0;41           
+Step: 0;42
+Task: 0;43
+Text: 0;44
+To: 0;45

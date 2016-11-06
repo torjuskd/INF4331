@@ -1,0 +1,10 @@
+Do n = 240 To 25
+     stars @
+     rocket (320, 2*n, -3) @
+     ufo (295+n, 25, -8) @
+     delay (20)
+  Loop n
+  explode (320, 35) @
+  quit
+
+  Append G: toys

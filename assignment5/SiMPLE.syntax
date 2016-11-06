@@ -1,0 +1,23 @@
+"\bAnd\b": And                    
+"\bBreak\b": Break                    
+"\bCall\b": Call
+"\bCommon\b": Common                 
+"\bContinue\b": Continue                 
+"\bDisplay\b": Display
+"\bDo\b": Do                     
+"\bElse\b": Else                     
+"\bEnd\b": End
+"\b(Float|Decimal)\b": Float (or Decimal)     
+"\b(Float2|Decimal2)\b": Float2 (or Decimal2)     
+"\bGoto\b": Goto
+"\bIf\b": If                     
+"\b(Int|Whole)\b": Int (or Whole)           
+"\b(Int2|Whole2)\b": Int2 (or Whole2)
+"\bLoop\b": Loop                   
+"\bOr\b": Or                       
+"\bReturn\b": Return
+"\bSet\b": Set                    
+"\bStep\b": Step                     
+"\bTask\b": Task
+"\bText\b": Text                   
+"\bTo\b": To

@@ -11,4 +11,4 @@ while: 0;91
 assignment: 0;95
 variables_and_methods: 0;91
 method_invocation: 0;36
-return: 34
+return: 0;34
