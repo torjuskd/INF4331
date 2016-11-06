@@ -7,10 +7,6 @@
 import sys
 import re
 
-#class something
-class asdf:
-    asdfasdf=0
-
 def readrulefile(rulefilename, syntax=False):
     """Reads rule-defining files in format <regex>: <rulename>
         
@@ -23,6 +19,9 @@ def readrulefile(rulefilename, syntax=False):
     rules = []
     with open(rulefilename) as rulefile:
         for line in rulefile:
+            line=line.strip()
+            if line.startswith("#"):
+                continue #interpret line as comment; do nothing.
             if syntax:
                 rules.append([re.search(r"^\"(.*)\":", line).group(1), re.search(r": (.*)(?:$|\n)", line).group(1).strip()])
             else:
@@ -46,12 +45,11 @@ def highlight(syntaxrules, themerules, sourcefilename):
     with open(sourcefilename) as sourcefile:
         read_data = sourcefile.read()
         data = read_data
-        lines=data.split("\n");
         for syntaxrule in syntaxrules:
             for themerule in themerules:
                 if themerule[0] == syntaxrule[1]:
-                    data = re.sub("("+syntaxrule[0]+")", ("\033[{}m".format(themerule[1]) + r"\1" + "\033[0m"), data, flags=re.MULTILINE)
-                    data = re.sub(regex, (r"\1\2" + "\033[0m" + r"\3\4\5\1"), data, flags=re.MULTILINE) #fix colors inside each other
+                    data = re.sub("("+syntaxrule[0]+")", ("\033[{}m".format(themerule[1]) + r"\1" + "\033[0m"), data, flags=re.MULTILINE) #do the color formatting
+                    data = re.sub(regex, (r"\1\2" + "\033[0m" + r"\3\4\5\1"), data, flags=re.MULTILINE) #"fix" colors inside each other
                     break #we found corresponding theme and syntax, jump to next syntax rule
         return data
 
@@ -59,9 +57,9 @@ def highlight(syntaxrules, themerules, sourcefilename):
 if __name__ == "__main__":
     if len(sys.argv) < 4: # Print help
         print("Usage: python3 highlighter.py <syntaxfile> <themefile> <sourcefile_to_color>")
-        sys.exit("Wrong commandline arguments supplied.")
+        sys.exit("Commandline arguments error.")
     syntaxrules = readrulefile(sys.argv[1], syntax=True)
     themerules = readrulefile(sys.argv[2])
     data=highlight(syntaxrules, themerules, sourcefilename=sys.argv[3])
     print(data)
-    # print(syntaxrules)
+
