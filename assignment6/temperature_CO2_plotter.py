@@ -9,12 +9,21 @@ import sys
 import re
 import matplotlib.pyplot as plt
 
-#The path of the input files are specified here:
+#The paths of the input files are specified here:
 CO2_file="assignment6_files/co2.csv"
 temperature_file="assignment6_files/temperature.csv"
 CO2_by_contry_file="assignment6_files/CO2_by_country.csv"
 
 def read_file(filepath):
+    """Reads data from a file and stores it into two lists
+        
+        Args:
+            filepath: String containing relative path (including filename) of the file you want to read
+
+        Returns:
+            header: List containing first line of the file (here interpreted as heading)
+            data: A list that holds the rest of the data in the file
+        """
     data = []
     with open(filepath) as file:
         for line in file:
@@ -23,6 +32,14 @@ def read_file(filepath):
     return header, data
 
 def parse_num(s):
+    """Parses the input either as an int or float
+        
+        Args:
+            s: input number (usually given in string-format)
+
+        Returns:
+            number (int/float): the parsed integer or float
+        """
     try:
         return int(s)
     except ValueError:
