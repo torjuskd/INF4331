@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-# Python script which reads data from the files CO2.csv and temperature.csv
-# and generates a labeled, nice plot of time vs. CO2 or time vs. temperature.
+# Simple web application for presenting CO2 and temperature data.
+
 # Usage:
-# python3 temperature_CO2_plotter.py
+# python3 web_visualization.py
 
 import sys
-import Flask
+from flask import Flask
 
 CO2_file="CO2_plot.svg"
 temperature_file="temperature_plot.svg"
@@ -41,10 +41,14 @@ def display_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=
             None
         """
     
+app = Flask(__name__)
 
-# Nice to have:
+@app.route("/")
+def hello():
+    pagestring = "<p>Hello World!</p>" + " " + "<img src=\""+CO2_file+"\" alt=\"CO2 Concentration\">" + "<img src=\""+temperature_file+"\" alt=\"Atmospheric temperature\">"
+    print(pagestring)
+    return pagestring
+
 if __name__ == "__main__":
-    # if len(sys.argv) < 2: # Print help
-    #     print("python3 temperature_CO2_plotter.py")
-    #     sys.exit("Commandline arguments error.")
+    app.run(debug=True, port=5002)
     print("it runs")

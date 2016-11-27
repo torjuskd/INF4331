@@ -46,7 +46,7 @@ def parse_num(s):
         return float(s)
 
 def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False):
-    """Plots time vs temperature, presents image and saves to file
+    """Plots time vs temperature, presents image (and can present image if specified)
         
         Args:
             months_to_plot (list): list containing months (1-12) to plot data from
@@ -78,7 +78,7 @@ def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_
     if show_figure: plt.show()
 
 def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=False):
-    """Plots time vs CO2, presents image and saves to file
+    """Plots time vs CO2, saves to file (and can present image if specified)
         
         Args:
             startyear: The year to start plotting from (eg. 1900), uses xmin if unspecified
