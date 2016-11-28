@@ -6,8 +6,8 @@
 # python3 temperature_CO2_plotter.py
 
 import sys
-import re
 import matplotlib.pyplot as plt
+#import re #Not used, but we might want to add it.
 
 #The paths of the input files are specified here:
 CO2_file="assignment6_files/co2.csv"
@@ -131,6 +131,7 @@ def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=Fal
     plt.savefig(savepath)
     if show_figure: plt.show()
 
+######TODO: IMPLEMENT START AND ENDYEAR IF IT MAKES SENCE
 def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax=None, startyear=None, endyear=None, show_figure=False, savepath="CO2_by_country.svg"):
     """Plots countries emissions of metric tons of CO2 per capita
         
@@ -149,7 +150,6 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
     header, data = read_file(CO2_by_contry_file, lines_end_with_comma=True)
     x, y = [], []
     x_labels = []
-    i=0
     for line in data:
         line.pop(0)
         country_string = line.pop(0)
@@ -170,13 +170,9 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
     plt.bar(x, y, align='center')
     plt.xticks(x, x_labels)
     plt.ylim(ymin, ymax)
-    xmin= (x[0] if startyear == None else startyear)
-    xmax= (x[-1] if endyear == None else endyear)
     #plt.xlim(xmin, xmax)
     plt.savefig(savepath)
     if show_figure: plt.show()
-    
-
 
 # Nice to have:
 if __name__ == "__main__":
