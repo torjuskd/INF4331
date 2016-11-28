@@ -43,6 +43,10 @@ def change():
 
     return render_template("index.html",temperature_file_path=temperature_file_path, CO2_file_path=CO2_file_path)
 
+@app.route("/help")
+def help():
+    return render_template("temperature_CO2_plotter.html")
+
 @app.after_request
 def apply_caching(response):
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
