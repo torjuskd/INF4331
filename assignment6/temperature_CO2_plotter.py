@@ -32,14 +32,15 @@ def read_file(filepath):
     return header, data
 
 def parse_num(s):
-    """Parses the input either as an int or float
+    """Parses the input either as an int or float, None if not number
         
         Args:
             s: input number (usually given in string-format)
 
         Returns:
-            number (int/float): the parsed integer or float
+            number (int/float/None): the parsed integer or float, None if not number
         """
+    if s == "" or s == None: return None
     try:
         return int(s)
     except ValueError:
@@ -64,9 +65,10 @@ def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_
     for d in data:
         year=d.pop(0)
         for i in range(len(d)):
-            if i in months_to_plot:
+            if (i+1) in months_to_plot:
                 x.append(parse_num(year))
                 y.append(parse_num(d[i]))
+    plt.close(0)
     plt.figure(0) # needed for parallelization
     plt.plot(x, y)
     plt.xlabel(header[0])
@@ -96,6 +98,7 @@ def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=Fal
     for d in data:
         x.append(parse_num(d[0]))
         y.append(parse_num(d[1]))
+    plt.close(1)
     plt.figure(1) # needed for parallelization
     plt.plot(x, y)
     plt.xlabel(header[0])
