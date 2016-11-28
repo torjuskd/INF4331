@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module temperature_CO2_plotter</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>temperature_CO2_plotter</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/user/Documents/inf4331/INF3331-torjuskd/assignment6/temperature_CO2_plotter.py">/home/user/Documents/inf4331/INF3331-torjuskd/assignment6/temperature_CO2_plotter.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;Python&nbsp;script&nbsp;which&nbsp;reads&nbsp;data&nbsp;from&nbsp;the&nbsp;files&nbsp;CO2.csv&nbsp;and&nbsp;temperature.csv<br>
+#&nbsp;and&nbsp;generates&nbsp;a&nbsp;labeled,&nbsp;nice&nbsp;plot&nbsp;of&nbsp;time&nbsp;vs.&nbsp;CO2&nbsp;or&nbsp;time&nbsp;vs.&nbsp;temperature.<br>
+#&nbsp;Usage:<br>
+#&nbsp;python3&nbsp;temperature_CO2_plotter.py</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-parse_num"><strong>parse_num</strong></a>(s)</dt><dd><tt>Parses&nbsp;the&nbsp;input&nbsp;either&nbsp;as&nbsp;an&nbsp;int&nbsp;or&nbsp;float,&nbsp;None&nbsp;if&nbsp;not&nbsp;number<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;s:&nbsp;input&nbsp;number&nbsp;(usually&nbsp;given&nbsp;in&nbsp;string-format)<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;(int/float/None):&nbsp;the&nbsp;parsed&nbsp;integer&nbsp;or&nbsp;float,&nbsp;None&nbsp;if&nbsp;not&nbsp;number</tt></dd></dl>
+ <dl><dt><a name="-plot_CO2"><strong>plot_CO2</strong></a>(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=False, savepath='CO2_plot.svg')</dt><dd><tt>Plots&nbsp;time&nbsp;vs&nbsp;CO2,&nbsp;saves&nbsp;to&nbsp;file&nbsp;(and&nbsp;can&nbsp;present&nbsp;image&nbsp;if&nbsp;specified)<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startyear:&nbsp;The&nbsp;year&nbsp;to&nbsp;start&nbsp;plotting&nbsp;from&nbsp;(eg.&nbsp;1900),&nbsp;uses&nbsp;xmin&nbsp;if&nbsp;unspecified<br>
+&nbsp;&nbsp;&nbsp;&nbsp;endyear:&nbsp;The&nbsp;year&nbsp;to&nbsp;end&nbsp;plotting&nbsp;from&nbsp;(eg.&nbsp;2000),&nbsp;uses&nbsp;xmax&nbsp;if&nbsp;unspecified<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ymin:&nbsp;Lowest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ymax:&nbsp;highest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;show_figure:&nbsp;shows&nbsp;the&nbsp;figure&nbsp;if&nbsp;true&nbsp;(not&nbsp;just&nbsp;saves&nbsp;to&nbsp;file)<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-plot_temperature"><strong>plot_temperature</strong></a>(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False, savepath='temperature_plot.svg')</dt><dd><tt>Plots&nbsp;time&nbsp;vs&nbsp;temperature,&nbsp;presents&nbsp;image&nbsp;(and&nbsp;can&nbsp;present&nbsp;image&nbsp;if&nbsp;specified)<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;months_to_plot&nbsp;(list):&nbsp;list&nbsp;containing&nbsp;months&nbsp;(1-12)&nbsp;to&nbsp;plot&nbsp;data&nbsp;from<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startyear:&nbsp;The&nbsp;year&nbsp;to&nbsp;start&nbsp;plotting&nbsp;from&nbsp;(eg.&nbsp;1900),&nbsp;uses&nbsp;xmin&nbsp;if&nbsp;unspecified<br>
+&nbsp;&nbsp;&nbsp;&nbsp;endyear:&nbsp;The&nbsp;year&nbsp;to&nbsp;end&nbsp;plotting&nbsp;from&nbsp;(eg.&nbsp;2000),&nbsp;uses&nbsp;xmax&nbsp;if&nbsp;unspecified<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ymin:&nbsp;Lowest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ymax:&nbsp;highest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;show_figure:&nbsp;shows&nbsp;the&nbsp;figure&nbsp;if&nbsp;true&nbsp;(not&nbsp;just&nbsp;saves&nbsp;to&nbsp;file)<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-read_file"><strong>read_file</strong></a>(filepath)</dt><dd><tt>Reads&nbsp;data&nbsp;from&nbsp;a&nbsp;file&nbsp;and&nbsp;stores&nbsp;it&nbsp;into&nbsp;two&nbsp;lists<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;filepath:&nbsp;String&nbsp;containing&nbsp;relative&nbsp;path&nbsp;(including&nbsp;filename)&nbsp;of&nbsp;the&nbsp;file&nbsp;you&nbsp;want&nbsp;to&nbsp;read<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;header:&nbsp;List&nbsp;containing&nbsp;first&nbsp;line&nbsp;of&nbsp;the&nbsp;file&nbsp;(here&nbsp;interpreted&nbsp;as&nbsp;heading)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data:&nbsp;A&nbsp;list&nbsp;that&nbsp;holds&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;file</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>CO2_by_contry_file</strong> = 'assignment6_files/CO2_by_country.csv'<br>
+<strong>CO2_file</strong> = 'assignment6_files/co2.csv'<br>
+<strong>temperature_file</strong> = 'assignment6_files/temperature.csv'</td></tr></table>
+</body></html>
