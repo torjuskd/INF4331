@@ -45,7 +45,7 @@ def parse_num(s):
     except ValueError:
         return float(s)
 
-def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False):
+def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False, savepath="temperature_plot.svg"):
     """Plots time vs temperature, presents image (and can present image if specified)
         
         Args:
@@ -67,6 +67,7 @@ def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_
             if i in months_to_plot:
                 x.append(parse_num(year))
                 y.append(parse_num(d[i]))
+    plt.figure(0) # needed for parallelization
     plt.plot(x, y)
     plt.xlabel(header[0])
     plt.ylabel("temperature")
@@ -74,10 +75,10 @@ def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_
     xmin= (x[0] if startyear == None else startyear)
     xmax= (x[-1] if endyear == None else endyear)
     plt.xlim(xmin, xmax)
-    plt.savefig("temperature_plot.svg")
+    plt.savefig(savepath)
     if show_figure: plt.show()
 
-def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=False):
+def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=False, savepath="CO2_plot.svg"):
     """Plots time vs CO2, saves to file (and can present image if specified)
         
         Args:
@@ -95,6 +96,7 @@ def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=Fal
     for d in data:
         x.append(parse_num(d[0]))
         y.append(parse_num(d[1]))
+    plt.figure(1) # needed for parallelization
     plt.plot(x, y)
     plt.xlabel(header[0])
     plt.ylabel(header[1])
@@ -102,7 +104,7 @@ def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=Fal
     xmin= (x[0] if startyear == None else startyear)
     xmax= (x[-1] if endyear == None else endyear)
     plt.xlim(xmin, xmax)
-    plt.savefig("CO2_plot.svg")
+    plt.savefig(savepath)
     if show_figure: plt.show()
 
 # Nice to have:
