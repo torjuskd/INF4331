@@ -37,7 +37,6 @@ def change():
     selected_months = []
     for m in months:
         selected_months.append(plotter.parse_num(request.form.get(m, None)))
-        print(selected_months)
         
     plotter.plot_temperature(startyear=time_from, endyear=time_to, ymin=yaxis_min_temperature, ymax=yaxis_max_temperature, months_to_plot=selected_months, savepath="static/"+temperature_file)
     plotter.plot_CO2(startyear=time_from, endyear=time_to, ymin=yaxis_min_CO2, ymax=yaxis_max_CO2, savepath="static/"+CO2_file)
@@ -53,7 +52,6 @@ def CO2_by_country():
 def CO2_by_country_changed():
     is_above_threshold = (True if plotter.parse_num(request.form["is_above_threshold"]) == 1 else False)
     threshold = plotter.parse_num(request.form["threshold"])
-    print(str(is_above_threshold) + "\t"+str(threshold))
     if threshold == None: treshold=1000
     plotter.plot_CO2_by_country(threshold=threshold, is_above_threshold=is_above_threshold, savepath="static/CO2_by_country.svg")
     return render_template("CO2_by_country.html", CO2_by_country_filepath=CO2_by_country_filepath)

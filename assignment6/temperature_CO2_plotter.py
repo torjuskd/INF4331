@@ -7,18 +7,18 @@
 
 import sys
 import matplotlib.pyplot as plt
-#import re #Not used, but we might want to add it.
 
 #The paths of the input files are specified here:
 CO2_file="assignment6_files/co2.csv"
 temperature_file="assignment6_files/temperature.csv"
 CO2_by_contry_file="assignment6_files/CO2_by_country.csv"
 
-def read_file(filepath, lines_end_with_comma=False, is_unicode=False):
+def read_file(filepath, lines_end_with_comma=False):
     """Reads data from a file and stores it into two lists
         
         Args:
             filepath: String containing relative path (including filename) of the file you want to read
+            lines_end_with_comma: One of the input files (that have lines ending with commas, needs special handling)
 
         Returns:
             header: List containing first line of the file (here interpreted as heading)
@@ -40,8 +40,6 @@ def read_file(filepath, lines_end_with_comma=False, is_unicode=False):
                     if s.endswith(','):
                         s = s[:-1]
                     line[i]=s
-                    
-                #line.pop(-1) #to remove the (empty) field that appears after the last comma on the line.
                 data.append(line)
             else:
                 data.append(line.strip().split(","))
@@ -50,13 +48,15 @@ def read_file(filepath, lines_end_with_comma=False, is_unicode=False):
 
 def parse_num(s):
     """Parses the input either as an int or float, None if not number
-        
+       A little messy, but it gets the job done
+
         Args:
             s: input number (usually given in string-format)
 
         Returns:
             number (int/float/None): the parsed integer or float, None if not number
         """
+    if s == "" or s == None: return None
     if s.startswith('"'):
         s = s[1:]
     if s.endswith('"'):
@@ -67,7 +67,32 @@ def parse_num(s):
     except ValueError:
         return float(s)
 
-def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False, savepath="temperature_plot.svg"):
+def find_regression_coefficient(x, y):
+    """Uses linear regression analysis to find the coefficient to use for predicting future temperatures
+       Simple algorithm based on a formula that can be found on:
+       https://en.wikipedia.org/wiki/Regression_analysis
+        
+        Args:
+            x: the x values to use
+            y: the y values to use
+
+        Returns:
+            number (float): calculated regression coefficient
+        """
+    """"""
+    x_sum, y_sum = 0, 0
+    for i in range(len(x)):
+        x_sum = x_sum + x[i]
+        y_sum = y_sum + y[i]
+    x_avg = x_sum / len(x)
+    y_avg = y_sum / len(y)
+    numerator, denominator = 0, 0
+    for i in range(len(x)):
+        numerator = numerator + (x[i] - x_avg) * (y[i] - y_avg)
+        denominator = denominator + (x[i] - x_avg)**2
+    return 1.0 * numerator / denominator
+
+def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False, savepath="temperature_plot.svg", years_to_predict=0):
     """Plots time vs temperature, presents image (and can present image if specified)
         
         Args:
@@ -77,6 +102,8 @@ def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_
             ymin: Lowest y-axis value to plot
             ymax: highest y-axis value to plot
             show_figure: shows the figure if true (not just saves to file)
+            years_to_predict: If non zero, will predict temperatures the given number of years into the future based on historical data.
+            savepath: Can be set to specify path to save image to
 
         Returns:
             None
@@ -95,9 +122,17 @@ def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_
     plt.xlabel(header[0])
     plt.ylabel("temperature")
     plt.ylim(ymin, ymax)
-    xmin= (x[0] if startyear == None else startyear)
-    xmax= (x[-1] if endyear == None else endyear)
+    xmin= (x[0] if startyear == None and years_to_predict == 0 else startyear)
+    xmax= (x[-1] if endyear == None and years_to_predict == 0 else endyear)
     plt.xlim(xmin, xmax)
+    if years_to_predict > 0:
+        #delta_y = (y[-1] - y[-2]) /2 #calculating simple delta
+        delta_y = find_regression_coefficient(x[(len(x)-20):len(x)], y[(len(y)-20):len(y)]) #Makes a prediction based on the 20 latest years.
+        xpred, ypred = [], []
+        for i in range(years_to_predict+1):
+            ypred.append(y[-1] + (i+1)*delta_y)
+            xpred.append(x[-1] + (i+1))
+        plt.plot(xpred, ypred)
     plt.savefig(savepath)
     if show_figure: plt.show()
 
@@ -110,6 +145,7 @@ def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=Fal
             ymin: Lowest y-axis value to plot
             ymax: highest y-axis value to plot
             show_figure: shows the figure if true (not just saves to file)
+            savepath: Can be set to specify path to save image to
 
         Returns:
             None
@@ -143,6 +179,7 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
             ymin: Lowest y-axis value to plot
             ymax: highest y-axis value to plot
             show_figure: shows the figure if true (not just saves to file)
+            savepath: Can be set to specify path to save image to
 
         Returns:
             None
@@ -175,14 +212,8 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
     plt.savefig(savepath)
     if show_figure: plt.show()
 
-# Nice to have:
 if __name__ == "__main__":
-    # if len(sys.argv) < 2: # Print help
-    #     print("python3 temperature_CO2_plotter.py")
-    #     sys.exit("Commandline arguments error.")
-    #plot_CO2()
-#    plot_CO2(startyear=1900, endyear=2000)
-#    plot_temperature(months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-    #plot_temperature(months_to_plot=[1], show_figure=True)
-#    plot_temperature([1999, 2000, 2001, 2002, 2003], 0, 1000)
-    plot_CO2_by_country(show_figure=True, savepath="static/CO2_by_country.svg")
+    """Main, will by default make some images and save them to the current folder."""
+    plot_CO2()
+    plot_temperature(months_to_plot=[12])
+    plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1], show_figure=False, savepath="temperature_plot_with_prediction.svg", years_to_predict=100)
