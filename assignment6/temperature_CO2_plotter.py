@@ -27,7 +27,7 @@ def read_file(filepath, lines_end_with_comma=False):
     data = []
     with open(filepath) as file:
         for line in file:
-            if lines_end_with_comma:
+            if lines_end_with_comma: #special handling
                 line = line.strip().split("\",\"")
                 for i in range(len(line)):
                     s=line[i]
@@ -42,7 +42,7 @@ def read_file(filepath, lines_end_with_comma=False):
                     line[i]=s
                 data.append(line)
             else:
-                data.append(line.strip().split(","))
+                data.append(line.strip().split(",")) #normal (default) easy operation
     header=data.pop(0)
     return header, data
 
@@ -189,18 +189,22 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
     header, data = read_file(CO2_by_contry_file, lines_end_with_comma=True)
     x, y = [], []
     x_labels = []
+    year_list=header[4:]
+    for i in range(len(year_list)): year_list[i] = parse_num(year_list[i])
     for line in data:
-        line.pop(0)
+        line.pop(0) #Country name
         country_string = line.pop(0)
-        line.pop(0)
-        line.pop(0)
-        #country_string = line.pop(0)+" "+line.pop(0)+" "+line.pop(0)+" "+line.pop(0) #Combine country name, code, indicator name, indicator code into one string
+        line.pop(0) #Indicator name
+        line.pop(0) #Indicator code
         emission_sum = 0
-        for emission in line:
+        for i in range(len(line)):
+            emission = line[i]
             parsed = parse_num(emission)
-            if parsed != None: emission_sum = emission_sum + parsed
+            #make sure that we only add emissions for the specified years:
+            if parsed != None and ((startyear==None and endyear==None) or (endyear==None and year_list[i] >= startyear) or (startyear==None and year_list[i] <= endyear) or (year_list[i] >= startyear and year_list[i] <= endyear)):
+                emission_sum = emission_sum + parsed
         #check if above or below treshold
-        if (is_above_threshold and emission_sum > threshold) or (is_above_threshold == False and emission_sum < threshold):
+        if (is_above_threshold and emission_sum >= threshold) or (is_above_threshold == False and emission_sum <= threshold):
             y.append(emission_sum)
             x_labels.append(country_string)
     for num in range(len(y)): x.append(num)
@@ -209,8 +213,6 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
     plt.bar(x, y, align='center')
     plt.xticks(x, x_labels)
     plt.ylim(ymin, ymax)
-    #xmin, xmax = None, None #don't use this: instead limit years we are summing over.
-    #plt.xlim(xmin, xmax)
     plt.savefig(savepath)
     if show_figure: plt.show()
 
@@ -219,4 +221,4 @@ if __name__ == "__main__":
     plot_CO2(savepath="static/CO2_by_country.svg")
     plot_temperature(months_to_plot=[12], savepath="static/temperature_plot.svg")
     plot_temperature(months_to_plot=[1], savepath="static/temperature_plot_with_prediction.svg", years_to_predict=100)
-    plotter.plot_CO2_by_country(savepath="static/CO2_by_country.svg")
+    plot_CO2_by_country(savepath="static/CO2_by_country.svg")
