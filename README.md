@@ -18,3 +18,10 @@
     - limited support for some languages included.
   * my_diff.py (alternative implementation of the diff utility)
     - can be highlighted using diff.theme and diff.syntax.
+- Assignment6: Web
+  * temperature_CO2_plotter.py (module that draws graphs, and saves them as picures)
+    - documentation can be found on webpage (or in templates/temperature_CO2_plotter.html)
+      - a simple script (make_pydoc.sh) can be used to generate this pydoc
+    -draws graphs based on input files in /assignment6_files
+  * web_visualization.py (Webpage that presents graphs made with the plotter)
+    - uses html templates from /templates and images from /static
