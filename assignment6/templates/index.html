@@ -14,7 +14,9 @@
 
 	<div class="col-md-4">
 	  <h2>Change parameters</h2>
-
+	  <p>
+	  <a href="/CO2_by_country">Or go instead to plot CO<sub>2</sub> per capita for different countries</a>
+	  </p>
 	  Time to plot from:
 	  <input type="number" name="time_from" value="1825">
 	  <input type="number" name="time_to">
@@ -30,7 +32,9 @@
 	  <input type="number" name="yaxis_max_temperature">
 	  <br />
 	  
-
+	  Specify how many years you want to predict into the future (only for temperature):
+	  <input type="number" name="years_to_predict" value="0">
+	  <br />
 
 	  Months to plot temperature from: <br />
 	  <input type="checkbox" name="jan" value="1" checked> January&nbsp;
@@ -49,15 +53,12 @@
 	  <br />
 	  <input type="submit" value="Update graphs" class="btn btn-primary btn-lg" style="margin-top:10px">
 	  <br />
-	  <br />
-	  <a href="/CO2_by_country" style="">Go here to instead plot CO<sub>2</sub> per capita for different countries</a>
-	</div>
 
-	<footer style="position:fixed; bottom:0px; margin:auto; text-align: center; left: 0; right: 0;">
-	  <a href="/help">Need help or documentation?</a>
-	</footer>
+	</div>
     </div>
     </form>
-    
+    <footer style="position:fixed; bottom:0px; margin:auto; text-align: center; left: 0; right: 0;">
+      <a href="/help">Need help or documentation?</a>
+    </footer>
   <body>
 </html>

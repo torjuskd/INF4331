@@ -21,22 +21,32 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
-</td><td width="25%" valign=top><a href="re.html">re</a><br>
 </td><td width="25%" valign=top><a href="sys.html">sys</a><br>
-</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
 <td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-parse_num"><strong>parse_num</strong></a>(s)</dt><dd><tt>Parses&nbsp;the&nbsp;input&nbsp;either&nbsp;as&nbsp;an&nbsp;int&nbsp;or&nbsp;float,&nbsp;None&nbsp;if&nbsp;not&nbsp;number<br>
+<td width="100%"><dl><dt><a name="-find_regression_coefficient"><strong>find_regression_coefficient</strong></a>(x, y)</dt><dd><tt>Uses&nbsp;linear&nbsp;regression&nbsp;analysis&nbsp;to&nbsp;find&nbsp;the&nbsp;coefficient&nbsp;to&nbsp;use&nbsp;for&nbsp;predicting&nbsp;future&nbsp;temperatures<br>
+Simple&nbsp;algorithm&nbsp;based&nbsp;on&nbsp;a&nbsp;formula&nbsp;that&nbsp;can&nbsp;be&nbsp;found&nbsp;on:<br>
+https://en.wikipedia.org/wiki/Regression_analysis<br>
 &nbsp;<br>
-Args:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;s:&nbsp;input&nbsp;number&nbsp;(usually&nbsp;given&nbsp;in&nbsp;string-format)<br>
+&nbsp;Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x:&nbsp;the&nbsp;x&nbsp;values&nbsp;to&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y:&nbsp;the&nbsp;y&nbsp;values&nbsp;to&nbsp;use<br>
 &nbsp;<br>
-Returns:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;(int/float/None):&nbsp;the&nbsp;parsed&nbsp;integer&nbsp;or&nbsp;float,&nbsp;None&nbsp;if&nbsp;not&nbsp;number</tt></dd></dl>
+&nbsp;Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;(float):&nbsp;calculated&nbsp;regression&nbsp;coefficient</tt></dd></dl>
+ <dl><dt><a name="-parse_num"><strong>parse_num</strong></a>(s)</dt><dd><tt>Parses&nbsp;the&nbsp;input&nbsp;either&nbsp;as&nbsp;an&nbsp;int&nbsp;or&nbsp;float,&nbsp;None&nbsp;if&nbsp;not&nbsp;number<br>
+A&nbsp;little&nbsp;messy,&nbsp;but&nbsp;it&nbsp;gets&nbsp;the&nbsp;job&nbsp;done<br>
+&nbsp;<br>
+&nbsp;Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s:&nbsp;input&nbsp;number&nbsp;(usually&nbsp;given&nbsp;in&nbsp;string-format)<br>
+&nbsp;<br>
+&nbsp;Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;(int/float/None):&nbsp;the&nbsp;parsed&nbsp;integer&nbsp;or&nbsp;float,&nbsp;None&nbsp;if&nbsp;not&nbsp;number</tt></dd></dl>
  <dl><dt><a name="-plot_CO2"><strong>plot_CO2</strong></a>(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=False, savepath='CO2_plot.svg')</dt><dd><tt>Plots&nbsp;time&nbsp;vs&nbsp;CO2,&nbsp;saves&nbsp;to&nbsp;file&nbsp;(and&nbsp;can&nbsp;present&nbsp;image&nbsp;if&nbsp;specified)<br>
 &nbsp;<br>
 Args:<br>
@@ -45,10 +55,25 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ymin:&nbsp;Lowest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ymax:&nbsp;highest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
 &nbsp;&nbsp;&nbsp;&nbsp;show_figure:&nbsp;shows&nbsp;the&nbsp;figure&nbsp;if&nbsp;true&nbsp;(not&nbsp;just&nbsp;saves&nbsp;to&nbsp;file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;savepath:&nbsp;Can&nbsp;be&nbsp;set&nbsp;to&nbsp;specify&nbsp;path&nbsp;to&nbsp;save&nbsp;image&nbsp;to<br>
 &nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
- <dl><dt><a name="-plot_temperature"><strong>plot_temperature</strong></a>(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False, savepath='temperature_plot.svg')</dt><dd><tt>Plots&nbsp;time&nbsp;vs&nbsp;temperature,&nbsp;presents&nbsp;image&nbsp;(and&nbsp;can&nbsp;present&nbsp;image&nbsp;if&nbsp;specified)<br>
+ <dl><dt><a name="-plot_CO2_by_country"><strong>plot_CO2_by_country</strong></a>(threshold=1000, is_above_threshold=True, ymin=None, ymax=None, startyear=None, endyear=None, show_figure=False, savepath='CO2_by_country.svg')</dt><dd><tt>Plots&nbsp;countries&nbsp;emissions&nbsp;of&nbsp;metric&nbsp;tons&nbsp;of&nbsp;CO2&nbsp;per&nbsp;capita<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;threshold:&nbsp;Generates&nbsp;a&nbsp;bar&nbsp;chart&nbsp;of&nbsp;CO2&nbsp;emissions&nbsp;below/above&nbsp;this&nbsp;set&nbsp;threshold<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is_above_threshold:&nbsp;if&nbsp;true,&nbsp;plots&nbsp;countries&nbsp;above&nbsp;threshold,&nbsp;else&nbsp;plots&nbsp;countries&nbsp;below<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startyear:&nbsp;The&nbsp;year&nbsp;to&nbsp;start&nbsp;plotting&nbsp;from&nbsp;(eg.&nbsp;1900),&nbsp;uses&nbsp;xmin&nbsp;if&nbsp;unspecified<br>
+&nbsp;&nbsp;&nbsp;&nbsp;endyear:&nbsp;The&nbsp;year&nbsp;to&nbsp;end&nbsp;plotting&nbsp;from&nbsp;(eg.&nbsp;2000),&nbsp;uses&nbsp;xmax&nbsp;if&nbsp;unspecified<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ymin:&nbsp;Lowest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ymax:&nbsp;highest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;show_figure:&nbsp;shows&nbsp;the&nbsp;figure&nbsp;if&nbsp;true&nbsp;(not&nbsp;just&nbsp;saves&nbsp;to&nbsp;file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;savepath:&nbsp;Can&nbsp;be&nbsp;set&nbsp;to&nbsp;specify&nbsp;path&nbsp;to&nbsp;save&nbsp;image&nbsp;to<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-plot_temperature"><strong>plot_temperature</strong></a>(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False, savepath='temperature_plot.svg', years_to_predict=0)</dt><dd><tt>Plots&nbsp;time&nbsp;vs&nbsp;temperature,&nbsp;presents&nbsp;image&nbsp;(and&nbsp;can&nbsp;present&nbsp;image&nbsp;if&nbsp;specified)<br>
 &nbsp;<br>
 Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;months_to_plot&nbsp;(list):&nbsp;list&nbsp;containing&nbsp;months&nbsp;(1-12)&nbsp;to&nbsp;plot&nbsp;data&nbsp;from<br>
@@ -57,13 +82,16 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ymin:&nbsp;Lowest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ymax:&nbsp;highest&nbsp;y-axis&nbsp;value&nbsp;to&nbsp;plot<br>
 &nbsp;&nbsp;&nbsp;&nbsp;show_figure:&nbsp;shows&nbsp;the&nbsp;figure&nbsp;if&nbsp;true&nbsp;(not&nbsp;just&nbsp;saves&nbsp;to&nbsp;file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;years_to_predict:&nbsp;If&nbsp;non&nbsp;zero,&nbsp;will&nbsp;predict&nbsp;temperatures&nbsp;the&nbsp;given&nbsp;number&nbsp;of&nbsp;years&nbsp;into&nbsp;the&nbsp;future&nbsp;based&nbsp;on&nbsp;historical&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;savepath:&nbsp;Can&nbsp;be&nbsp;set&nbsp;to&nbsp;specify&nbsp;path&nbsp;to&nbsp;save&nbsp;image&nbsp;to<br>
 &nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
- <dl><dt><a name="-read_file"><strong>read_file</strong></a>(filepath)</dt><dd><tt>Reads&nbsp;data&nbsp;from&nbsp;a&nbsp;file&nbsp;and&nbsp;stores&nbsp;it&nbsp;into&nbsp;two&nbsp;lists<br>
+ <dl><dt><a name="-read_file"><strong>read_file</strong></a>(filepath, lines_end_with_comma=False)</dt><dd><tt>Reads&nbsp;data&nbsp;from&nbsp;a&nbsp;file&nbsp;and&nbsp;stores&nbsp;it&nbsp;into&nbsp;two&nbsp;lists<br>
 &nbsp;<br>
 Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;filepath:&nbsp;String&nbsp;containing&nbsp;relative&nbsp;path&nbsp;(including&nbsp;filename)&nbsp;of&nbsp;the&nbsp;file&nbsp;you&nbsp;want&nbsp;to&nbsp;read<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lines_end_with_comma:&nbsp;One&nbsp;of&nbsp;the&nbsp;input&nbsp;files&nbsp;(that&nbsp;have&nbsp;lines&nbsp;ending&nbsp;with&nbsp;commas,&nbsp;needs&nbsp;special&nbsp;handling)<br>
 &nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;header:&nbsp;List&nbsp;containing&nbsp;first&nbsp;line&nbsp;of&nbsp;the&nbsp;file&nbsp;(here&nbsp;interpreted&nbsp;as&nbsp;heading)<br>

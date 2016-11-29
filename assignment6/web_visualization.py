@@ -32,13 +32,14 @@ def change():
     yaxis_max_CO2 = plotter.parse_num(request.form["yaxis_max_CO2"])
     yaxis_min_temperature = plotter.parse_num(request.form["yaxis_min_temperature"])
     yaxis_max_temperature = plotter.parse_num(request.form["yaxis_max_temperature"])
+    years_to_predict = plotter.parse_num(request.form["years_to_predict"])
 
     months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
     selected_months = []
     for m in months:
         selected_months.append(plotter.parse_num(request.form.get(m, None)))
         
-    plotter.plot_temperature(startyear=time_from, endyear=time_to, ymin=yaxis_min_temperature, ymax=yaxis_max_temperature, months_to_plot=selected_months, savepath="static/"+temperature_file)
+    plotter.plot_temperature(startyear=time_from, endyear=time_to, ymin=yaxis_min_temperature, ymax=yaxis_max_temperature, months_to_plot=selected_months, savepath="static/"+temperature_file, years_to_predict=years_to_predict)
     plotter.plot_CO2(startyear=time_from, endyear=time_to, ymin=yaxis_min_CO2, ymax=yaxis_max_CO2, savepath="static/"+CO2_file)
 
     return render_template("index.html",temperature_file_path=temperature_file_path, CO2_file_path=CO2_file_path)
@@ -67,6 +68,5 @@ def apply_caching(response):
     return response
 
 if __name__ == "__main__":
-    #app = Flask(static_folder='..')
     app.run(debug=True, port=5002)
 

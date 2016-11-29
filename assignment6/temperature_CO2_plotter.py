@@ -126,8 +126,10 @@ def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_
     xmax= (x[-1] if endyear == None and years_to_predict == 0 else endyear)
     plt.xlim(xmin, xmax)
     if years_to_predict > 0:
-        #delta_y = (y[-1] - y[-2]) /2 #calculating simple delta
-        delta_y = find_regression_coefficient(x[(len(x)-20):len(x)], y[(len(y)-20):len(y)]) #Makes a prediction based on the 20 latest years.
+        # Here we make our prediction of the future. Assumptions:
+        # * Base prediction on historical data from the 20 latest years.
+        # * Assume linear growth.
+        delta_y = find_regression_coefficient(x[(len(x)-20):len(x)], y[(len(y)-20):len(y)]) 
         xpred, ypred = [], []
         for i in range(years_to_predict+1):
             ypred.append(y[-1] + (i+1)*delta_y)
@@ -213,7 +215,8 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
     if show_figure: plt.show()
 
 if __name__ == "__main__":
-    """Main, will by default make some images and save them to the current folder."""
-    plot_CO2()
-    plot_temperature(months_to_plot=[12])
-    plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1], show_figure=False, savepath="temperature_plot_with_prediction.svg", years_to_predict=100)
+    """Main, will by default make some images and save them to the static folder."""
+    plot_CO2(savepath="static/CO2_by_country.svg")
+    plot_temperature(months_to_plot=[12], savepath="static/temperature_plot.svg")
+    plot_temperature(months_to_plot=[1], savepath="static/temperature_plot_with_prediction.svg", years_to_predict=100)
+    plotter.plot_CO2_by_country(savepath="static/CO2_by_country.svg")
