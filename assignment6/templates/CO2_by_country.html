@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset='utf-8'>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap-3.3.7-dist/css/bootstrap.css">
+  </head>
+  <body>
+    <div class="conainer-fluid">
+      <h1>CO<sub>2</sub> Per capita for different countries </h1>
+      <img src="{{ CO2_by_country_filepath }}?id={{ time }}" alt="CO2 by country">
+
+      <form action="/CO2_by_country_updated" method="POST">
+
+	<div class="col-md-4">
+	  <h2>Change parameters</h2>
+	  Display countries:<br />
+	  <input type="radio" name="is_above_threshold" value="1" checked>above the threshold<br />
+	  <input type="radio" name="is_above_threshold" value="0">below the threshold<br />
+	  
+	  Threshold:
+	  <input type="number" name="threshold" value="1000">
+	  <br />
+	  <input type="submit" value="Update graphs" class="btn btn-primary btn-lg" style="margin-top:10px">
+	  <br />
+	  <br />
+	  <a href="/" style="">Go back to CO<sub>2</sub> concentration and temperature graphs</a>
+	</div>
+      </form>
+
+
+    </div>
+    <footer style="position:fixed; bottom:0px; margin:auto; text-align: center; left: 0; right: 0;">
+      <a href="/help">Need help or documentation?</a>
+    </footer>
+  <body>
+</html>

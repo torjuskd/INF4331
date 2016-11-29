@@ -15,6 +15,7 @@ CO2_file="CO2_plot.svg"
 temperature_file="temperature_plot.svg"
 temperature_file_path="static/"+temperature_file
 CO2_file_path="static/"+CO2_file
+CO2_by_country_filepath="static/CO2_by_country.svg"
 app = Flask(__name__)
 
 @app.route("/")
@@ -36,12 +37,26 @@ def change():
     selected_months = []
     for m in months:
         selected_months.append(plotter.parse_num(request.form.get(m, None)))
-    print(selected_months)
-    
+        print(selected_months)
+        
     plotter.plot_temperature(startyear=time_from, endyear=time_to, ymin=yaxis_min_temperature, ymax=yaxis_max_temperature, months_to_plot=selected_months, savepath="static/"+temperature_file)
     plotter.plot_CO2(startyear=time_from, endyear=time_to, ymin=yaxis_min_CO2, ymax=yaxis_max_CO2, savepath="static/"+CO2_file)
 
     return render_template("index.html",temperature_file_path=temperature_file_path, CO2_file_path=CO2_file_path)
+
+@app.route("/CO2_by_country")
+def CO2_by_country():
+    plotter.plot_CO2_by_country(savepath="static/CO2_by_country.svg")
+    return render_template("CO2_by_country.html", CO2_by_country_filepath=CO2_by_country_filepath)
+
+@app.route("/CO2_by_country_updated", methods=['POST'])
+def CO2_by_country_changed():
+    is_above_threshold = (True if plotter.parse_num(request.form["is_above_threshold"]) == 1 else False)
+    threshold = plotter.parse_num(request.form["threshold"])
+    print(str(is_above_threshold) + "\t"+str(threshold))
+    if threshold == None: treshold=1000
+    plotter.plot_CO2_by_country(threshold=threshold, is_above_threshold=is_above_threshold, savepath="static/CO2_by_country.svg")
+    return render_template("CO2_by_country.html", CO2_by_country_filepath=CO2_by_country_filepath)
 
 @app.route("/help")
 def help():

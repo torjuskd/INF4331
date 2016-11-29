@@ -3,58 +3,61 @@
   <head>
     <meta charset='utf-8'>
     <link rel="stylesheet" type="text/css" href="../static/bootstrap-3.3.7-dist/css/bootstrap.css">
-  <head>
-    <body>
-      <div class="conainer-fluid">
-	<h1>CO<sub>2</sub> Concentration and Temperature Graphs </h1>
-	<img src="{{ CO2_file_path }}?id={{ time }}" alt="CO2 Concentration">
-	<img src="{{ temperature_file_path }}?id=?{{ time }}" alt="Atmospheric temperature">
+  </head>
+  <body>
+    <div class="conainer-fluid">
+      <h1>CO<sub>2</sub> Concentration and Temperature Graphs </h1>
+      <img src="{{ CO2_file_path }}?id={{ time }}" alt="CO2 Concentration">
+      <img src="{{ temperature_file_path }}?id=?{{ time }}" alt="Atmospheric temperature">
 
-	<form action="/ParametersChanged" method="POST">
+      <form action="/ParametersChanged" method="POST">
 
-	  <div class="col-md-4">
-	    <h2>Change parameters</h2>
+	<div class="col-md-4">
+	  <h2>Change parameters</h2>
 
-	    Time to plot from:
-	    <input type="number" name="time_from">
-	    <input type="number" name="time_to">
-	    <br />
-	    
-	    Y-axis range for temperature graph:
-	    <input type="number" name="yaxis_min_CO2">
-	    <input type="number" name="yaxis_max_CO2">
-	    <br />
-
-	    Y-axis range for CO<sub>2</sub> graph:
-	    <input type="number" name="yaxis_min_temperature">
-	    <input type="number" name="yaxis_max_temperature">
-	    <br />
-	    
-
-
-	    Months to plot temperature from: <br />
-	    <input type="checkbox" name="jan" value="1" checked> January&nbsp;
-	    <input type="checkbox" name="feb" value="2" checked> February&nbsp;
-	    <input type="checkbox" name="mar" value="3" checked> March&nbsp;
-	    <input type="checkbox" name="apr" value="4" checked> April&nbsp;
-	    <input type="checkbox" name="may" value="5" checked> May&nbsp;
-	    <input type="checkbox" name="jun" value="6" checked> June&nbsp;
-	    <input type="checkbox" name="jul" value="7" checked> July&nbsp;
-	    <br />
-	    <input type="checkbox" name="aug" value="8" checked> August&nbsp;
-	    <input type="checkbox" name="sep" value="9" checked> September&nbsp;
-	    <input type="checkbox" name="oct" value="10" checked> October&nbsp;
-	    <input type="checkbox" name="nov" value="11" checked> November&nbsp;
-	    <input type="checkbox" name="dec" value="12" checked> December
-	    <br />
-	    <input type="submit" value="Update graphs" class="btn btn-primary btn-lg" style="margin-top:10px">
-	  </div>
+	  Time to plot from:
+	  <input type="number" name="time_from" value="1825">
+	  <input type="number" name="time_to">
+	  <br />
 	  
-	  <footer style="position:fixed; bottom:0px; margin:auto; text-align: center; left: 0; right: 0;">
-	    <a href="/help">Need help or documentation?</a>
-	  </footer>
-      </div>
-      </form>
-      
-    <body>
+	  Y-axis range for temperature graph:
+	  <input type="number" name="yaxis_min_CO2">
+	  <input type="number" name="yaxis_max_CO2">
+	  <br />
+
+	  Y-axis range for CO<sub>2</sub> graph:
+	  <input type="number" name="yaxis_min_temperature">
+	  <input type="number" name="yaxis_max_temperature">
+	  <br />
+	  
+
+
+	  Months to plot temperature from: <br />
+	  <input type="checkbox" name="jan" value="1" checked> January&nbsp;
+	  <input type="checkbox" name="feb" value="2" checked> February&nbsp;
+	  <input type="checkbox" name="mar" value="3" checked> March&nbsp;
+	  <input type="checkbox" name="apr" value="4" checked> April&nbsp;
+	  <input type="checkbox" name="may" value="5" checked> May&nbsp;
+	  <input type="checkbox" name="jun" value="6" checked> June&nbsp;
+	  <input type="checkbox" name="jul" value="7" checked> July&nbsp;
+	  <br />
+	  <input type="checkbox" name="aug" value="8" checked> August&nbsp;
+	  <input type="checkbox" name="sep" value="9" checked> September&nbsp;
+	  <input type="checkbox" name="oct" value="10" checked> October&nbsp;
+	  <input type="checkbox" name="nov" value="11" checked> November&nbsp;
+	  <input type="checkbox" name="dec" value="12" checked> December
+	  <br />
+	  <input type="submit" value="Update graphs" class="btn btn-primary btn-lg" style="margin-top:10px">
+	  <br />
+	  <br />
+	  <a href="/CO2_by_country" style="">Go here to instead plot CO<sub>2</sub> per capita for different countries</a>
+	</div>
+
+	<footer style="position:fixed; bottom:0px; margin:auto; text-align: center; left: 0; right: 0;">
+	  <a href="/help">Need help or documentation?</a>
+	</footer>
+    </div>
+    </form>
+    
+  <body>
 </html>

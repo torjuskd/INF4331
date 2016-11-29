@@ -170,6 +170,7 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
     plt.bar(x, y, align='center')
     plt.xticks(x, x_labels)
     plt.ylim(ymin, ymax)
+    #xmin, xmax = None, None #don't use this: instead limit years we are summing over.
     #plt.xlim(xmin, xmax)
     plt.savefig(savepath)
     if show_figure: plt.show()
