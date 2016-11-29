@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
-# Python script which reads data from the files CO2.csv and temperature.csv
-# and generates a labeled, nice plot of time vs. CO2 or time vs. temperature.
+# Python script which reads data from the files CO2.csv, temperature.csv and CO2_by_country.csv,
+# then generates a labeled, nice plot of time vs. CO2, time vs. temperature, and CO2 emissions
+# per capita for different countries.
+
 # Usage:
 # python3 temperature_CO2_plotter.py
 
