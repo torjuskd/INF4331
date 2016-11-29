@@ -169,15 +169,14 @@ def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=Fal
     plt.savefig(savepath)
     if show_figure: plt.show()
 
-######TODO: IMPLEMENT START AND ENDYEAR IF IT MAKES SENCE
 def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax=None, startyear=None, endyear=None, show_figure=False, savepath="CO2_by_country.svg"):
     """Plots countries emissions of metric tons of CO2 per capita
         
         Args:
             threshold: Generates a bar chart of CO2 emissions below/above this set threshold
             is_above_threshold: if true, plots countries above threshold, else plots countries below
-            startyear: The year to start plotting from (eg. 1900), uses xmin if unspecified
-            endyear: The year to end plotting from (eg. 2000), uses xmax if unspecified
+            startyear: Beginning year to count emissions for
+            endyear: End year to count emissions for
             ymin: Lowest y-axis value to plot
             ymax: highest y-axis value to plot
             show_figure: shows the figure if true (not just saves to file)
