@@ -94,7 +94,7 @@ def find_regression_coefficient(x, y):
         denominator = denominator + (x[i] - x_avg)**2
     return 1.0 * numerator / denominator
 
-def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False, savepath="temperature_plot.svg", years_to_predict=0):
+def plot_temperature(ymin=-6, ymax=2, startyear=None, endyear=None, months_to_plot=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show_figure=False, savepath="temperature_plot.svg", years_to_predict=0):
     """Plots time vs temperature, presents image (and can present image if specified)
         
         Args:
@@ -115,28 +115,50 @@ def plot_temperature(ymin=None, ymax=None, startyear=None, endyear=None, months_
     for d in data:
         year=d.pop(0)
         for i in range(len(d)):
-            if (i+1) in months_to_plot:
+            if (i+1) in months_to_plot: # Add selected months to plot.
                 x.append(parse_num(year))
                 y.append(parse_num(d[i]))
     plt.close(0)
-    plt.figure(0) # needed for parallelization
-    plt.plot(x, y)
+    plt.figure(0) # needed when drawing multiple plots
+    
     plt.xlabel(header[0])
     plt.ylabel("temperature")
-    plt.ylim(ymin, ymax)
-    xmin= (x[0] if startyear == None and years_to_predict == 0 else startyear)
-    xmax= (x[-1] if endyear == None and years_to_predict == 0 else endyear)
-    plt.xlim(xmin, xmax)
+    
+
     if years_to_predict > 0:
         # Here we make our prediction of the future. Assumptions:
-        # * Base prediction on historical data from the 20 latest years.
+        # * Base prediction on historical data from the 24 data points (years, months).
         # * Assume linear growth.
-        delta_y = find_regression_coefficient(x[(len(x)-20):len(x)], y[(len(y)-20):len(y)]) 
+        
+        num_removed = 0 #first we must remove data outside range:
+        for i in range(len(x)):
+            if x[i-num_removed] < startyear or x[i-num_removed] > endyear:
+                del x[i-num_removed]
+                del y[i-num_removed]
+                num_removed = num_removed + 1
+        
+        data_points_to_use = 24 #select 24 data points as default to regress from
+        if len(x) < data_points_to_use:
+            data_points_to_use = len(x) # use fewer data points if we don't have 24
+        delta_y = find_regression_coefficient(x[(len(x)-data_points_to_use):len(x)], y[(len(y)-data_points_to_use):len(y)]) #find coefficient
         xpred, ypred = [], []
-        for i in range(years_to_predict+1):
+        for i in range(years_to_predict+1): # populate lists containing predicted values:
             ypred.append(y[-1] + (i+1)*delta_y)
             xpred.append(x[-1] + (i+1))
-        plt.plot(xpred, ypred)
+    plt.ylim(ymin, ymax)
+    print(ymin)
+    print(ymax)
+    plt.plot(x, y)
+    if years_to_predict > 0:   # looks unnecessary to draw it here, but this way we are preserving the order the plots are drawn,
+        plt.plot(xpred, ypred) # so that the viewer isn't confused.
+
+
+    
+    if years_to_predict == 0: #limit the x-axis to start and end, if not predicting future years
+        xmin= (x[0] if startyear == None else startyear)
+        xmax= (x[-1] if endyear == None else endyear)
+        plt.xlim(xmin, xmax)
+    
     plt.savefig(savepath)
     if show_figure: plt.show()
 
@@ -160,7 +182,7 @@ def plot_CO2(ymin=None, ymax=None, startyear=None, endyear=None, show_figure=Fal
         x.append(parse_num(d[0]))
         y.append(parse_num(d[1]))
     plt.close(1)
-    plt.figure(1) # needed for parallelization
+    plt.figure(1) # needed when drawing multiple plots
     plt.plot(x, y)
     plt.xlabel(header[0])
     plt.ylabel(header[1])
@@ -194,7 +216,7 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
     for i in range(len(year_list)): year_list[i] = parse_num(year_list[i])
     for line in data:
         line.pop(0) #Country name
-        country_string = line.pop(0)
+        country_string = line.pop(0) # This is what we keep right now, (country short name)
         line.pop(0) #Indicator name
         line.pop(0) #Indicator code
         emission_sum = 0
@@ -208,9 +230,10 @@ def plot_CO2_by_country(threshold=1000, is_above_threshold=True, ymin=None, ymax
         if (is_above_threshold and emission_sum >= threshold) or (is_above_threshold == False and emission_sum <= threshold):
             y.append(emission_sum)
             x_labels.append(country_string)
+            
     for num in range(len(y)): x.append(num)
     plt.close(2)
-    plt.figure(2) # needed for parallelization
+    plt.figure(2) # needed when drawing multiple plots
     plt.bar(x, y, align='center')
     plt.xticks(x, x_labels)
     plt.ylim(ymin, ymax)

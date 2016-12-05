@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def start():
-    plotter.plot_temperature(startyear=1825, savepath=temperature_file_path)
+    plotter.plot_temperature(startyear=1825, months_to_plot=[1], savepath=temperature_file_path)
     plotter.plot_CO2(startyear=1825, savepath=CO2_file_path)
     return render_template("index.html",temperature_file_path=temperature_file_path, CO2_file_path=CO2_file_path)
 
@@ -54,10 +54,12 @@ def CO2_by_country():
 
 @app.route("/CO2_by_country_updated", methods=['POST'])
 def CO2_by_country_changed():
+    time_from = plotter.parse_num(request.form["time_from"])
+    time_to = plotter.parse_num(request.form["time_to"])
     is_above_threshold = (True if plotter.parse_num(request.form["is_above_threshold"]) == 1 else False)
     threshold = plotter.parse_num(request.form["threshold"])
     if threshold == None: treshold=1000
-    plotter.plot_CO2_by_country(threshold=threshold, is_above_threshold=is_above_threshold, savepath=CO2_by_country_file_path)
+    plotter.plot_CO2_by_country(threshold=threshold, is_above_threshold=is_above_threshold, startyear=time_from, endyear=time_to, savepath=CO2_by_country_file_path)
     return render_template("CO2_by_country.html", CO2_by_country_file_path=CO2_by_country_file_path)
 
 @app.route("/help")
